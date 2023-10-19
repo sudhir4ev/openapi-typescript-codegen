@@ -28,7 +28,7 @@ export type Options = {
     postfixModels?: string;
     request?: string;
     write?: boolean;
-    resolveTemplates?: {
+    useTemplates?: {
         service?: string
     }
 };

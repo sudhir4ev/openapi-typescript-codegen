@@ -114,15 +114,15 @@ export const registerHandlebarTemplates = (root: {
     httpClient: HttpClient;
     useOptions: boolean;
     useUnionTypes: boolean;
-    resolveTemplates?: {
+    useTemplates?: {
         service?: string
     }
 }): Templates => {
     registerHandlebarHelpers(root);
 
     const resolvedTemplates = {
-        service: root.resolveTemplates?.service
-            ? resolveTemplate(root.resolveTemplates.service)
+        service: root.useTemplates?.service
+            ? resolveTemplate(root.useTemplates.service)
             : undefined
     }
 
