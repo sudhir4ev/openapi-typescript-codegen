@@ -18,6 +18,9 @@ const generate = async (input, output) => {
         // indent: OpenAPI.Indent.SPACE_2,
         // postfix: 'Service',
         // request: './test/custom/request.ts',
+        // resolveTemplates: {
+        //     service: 'test/customExportService.hbs'
+        // }
     });
 };
 

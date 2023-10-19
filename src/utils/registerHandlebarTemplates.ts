@@ -84,6 +84,7 @@ import partialTypeIntersection from '../templates/partials/typeIntersection.hbs'
 import partialTypeReference from '../templates/partials/typeReference.hbs';
 import partialTypeUnion from '../templates/partials/typeUnion.hbs';
 import { registerHandlebarHelpers } from './registerHandlebarHelpers';
+import { resolveTemplate } from "./resolveTemplate";
 
 export interface Templates {
     index: Handlebars.TemplateDelegate;
@@ -113,8 +114,17 @@ export const registerHandlebarTemplates = (root: {
     httpClient: HttpClient;
     useOptions: boolean;
     useUnionTypes: boolean;
+    resolveTemplates?: {
+        service?: string
+    }
 }): Templates => {
     registerHandlebarHelpers(root);
+
+    const resolvedTemplates = {
+        service: root.resolveTemplates?.service
+            ? resolveTemplate(root.resolveTemplates.service)
+            : undefined
+    }
 
     // Main templates (entry points for the files we write to disk)
     const templates: Templates = {
@@ -123,7 +133,9 @@ export const registerHandlebarTemplates = (root: {
         exports: {
             model: Handlebars.template(templateExportModel),
             schema: Handlebars.template(templateExportSchema),
-            service: Handlebars.template(templateExportService),
+            service: resolvedTemplates.service
+                ? Handlebars.template(resolvedTemplates.service)
+                : Handlebars.template(templateExportService),
         },
         core: {
             settings: Handlebars.template(templateCoreSettings),

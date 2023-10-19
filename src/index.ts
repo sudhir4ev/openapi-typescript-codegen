@@ -27,6 +27,9 @@ export type Options = {
     postfixServices?: string;
     postfixModels?: string;
     request?: string;
+    resolveTemplates?: {
+        service?: string
+    };
     write?: boolean;
 };
 
@@ -48,6 +51,7 @@ export type Options = {
  * @param postfixServices Service name postfix
  * @param postfixModels Model name postfix
  * @param request Path to custom request file
+ * @param resolveTemplates Template files (in .hbs format) for services generated from OpenAPI spec.
  * @param write Write the files to disk (true or false)
  */
 export const generate = async ({
@@ -65,6 +69,7 @@ export const generate = async ({
     postfixServices = 'Service',
     postfixModels = '',
     request,
+    resolveTemplates,
     write = true,
 }: Options): Promise<void> => {
     const openApi = isString(input) ? await getOpenApiSpec(input) : input;
@@ -73,6 +78,7 @@ export const generate = async ({
         httpClient,
         useUnionTypes,
         useOptions,
+        resolveTemplates
     });
 
     switch (openApiVersion) {

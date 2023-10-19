@@ -28,6 +28,9 @@ export type Options = {
     postfixModels?: string;
     request?: string;
     write?: boolean;
+    resolveTemplates?: {
+        service?: string
+    }
 };
 
 export declare function generate(options: Options): Promise<void>;
